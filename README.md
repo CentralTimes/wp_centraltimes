@@ -6,8 +6,9 @@ This plugin currently performs the following changes to the REST API:
 - Registers a new endpoint `/centraltimes/v1/shortcodes`, which describes the internal `shortcode_tags` global
   variable. (shortcode names are the keys)
 - Registers a new endpoint `/wp/v2/staff_profile` for the SNO `staff_profile` custom post type.
-- Registers post metas `jobtitle`, `name`, `schoolyear`, `sno_deck`, `staffposition`, and `writer` as fields under
-  each `staff_profile` entry.
+- Registers metas of `post` (endpoint `posts` in namespace `wp/v2`): `writer`, `sno_deck`, `jobtitle`, `video`,
+  & `videographer` to REST fields `ct_writer`, `ct_subtitle`, `ct_jobtitle`, `ct_video`, & `ct_videographer`,
+  respectively.
 - Registers custom taxonomies at the endpoints `/wp/v2/staff_year` and `/wp/v2/staff_name`, for `staff_year`
   and `staff_name` respectively.
 
