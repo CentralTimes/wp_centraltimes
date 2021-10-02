@@ -3,8 +3,7 @@
 This plugin currently performs the following changes to the REST API:
 
 - Registers a field, `ct_raw`, containing raw un-rendered post data, with shortcodes, to each post on `/wp/v2/posts`
-- Registers a new endpoint `/centraltimes/v1/shortcodes`, which describes the internal `shortcode_tags` global
-  variable. (shortcode names are the keys)
+- Registers a new endpoint `/centraltimes/v1/shortcodes`, which returns an array of shortcode names.
 - Registers a new endpoint `/wp/v2/staff_profile` for the SNO `staff_profile` custom post type.
 - Registers metas of `post` (endpoint `posts` in namespace `wp/v2`): `writer`, `sno_deck`, `jobtitle`, `video`,
   & `videographer` to REST fields `ct_writer`, `ct_subtitle`, `ct_jobtitle`, `ct_video`, & `ct_videographer`,
@@ -13,6 +12,10 @@ This plugin currently performs the following changes to the REST API:
   and `staff_name` respectively.
 
 # Changelog
+
+## v0.6.0
+- Registered a new endpoint `/centraltimes/v1/ngg-gallery/(?P<id>\d+)`, to return gallery image data
+- Modified `/centraltimes/v1/shortcodes` to return an array of shortcode names instead of shortcode keys
 
 ## v0.5.1
 

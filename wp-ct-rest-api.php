@@ -3,7 +3,7 @@
 Plugin Name: Central Times REST API
 Plugin URI: https://github.com/CentralTimes/wp_ct_rest_api
 Description: A WordPress plugin designed to modify the REST API to include data present in the Central Times SNO FLEX installation. Used by Central Times for its mobile app.
-Version: 0.5.1
+Version: 0.6.0
 Author: Central Times
 Author URI: https://github.com/CentralTimes
 License: MIT
@@ -16,11 +16,31 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => function () {
             global $shortcode_tags;
-            return $shortcode_tags;
+            return array_keys($shortcode_tags);
         },
     ));
 
-    // Re
+    // Register list of NextGEN images for gallery
+    register_rest_route('centraltimes/v1', '/ngg-gallery/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => function ($data) {
+            $images = array();
+            $ids = nggdb::get_ids_from_gallery(
+                $data["id"], // Required. gallery ID
+                $data["order_by"], // "ASC" (default) or "DESC"
+                $data["order_dir"], // Comma-separated ngg-image IDs for sort order
+                $data["exclude"]); // 0 or 1 (default) depending on whether to exclude any excluded images
+            foreach ($ids as $id) {
+                $images[] = nggdb::find_image($id);
+            }
+
+            return array_map(function ($v) {
+                return $v->{"_ngiw"}->{"_orig_image"};
+            }, $images);
+        },
+    ));
+
+    // Register raw data field for post
     register_rest_field(
         'post',
         'ct_raw',
