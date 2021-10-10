@@ -1,13 +1,13 @@
 <?php
-/*
-Plugin Name: Central Times REST API
-Plugin URI: https://github.com/CentralTimes/wp_ct_rest_api
-Description: A WordPress plugin designed to modify the REST API to include data present in the Central Times SNO FLEX installation. Used by Central Times for its mobile app.
-Version: 0.7.0
-Author: Central Times
-Author URI: https://github.com/CentralTimes
-License: MIT
-*/
+/**
+ * Plugin Name: Central Times
+ * Plugin URI: https://github.com/CentralTimes/wp_centraltimes
+ * Description: A WordPress plugin designed to modify the REST API to include data present in the Central Times SNO FLEX installation. Used by Central Times for its mobile app.
+ * Version: 0.7.0
+ * Author: Central Times App Development Team
+ * Author URI: https://github.com/CentralTimes
+ * License: MIT
+ */
 defined('ABSPATH') or die;
 
 add_action('rest_api_init', function () {
@@ -36,7 +36,7 @@ add_action('rest_api_init', function () {
         },
     ));
 
-    // Register list of NextGEN images for gallery
+    // Register list of NextGEN images for ngg gallery
     register_rest_route('centraltimes/v1', '/ngg-gallery/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => function ($data) {
@@ -53,6 +53,23 @@ add_action('rest_api_init', function () {
             return array_map(function ($v) {
                 return $v->{"_ngiw"}->{"_orig_image"};
             }, $images);
+        },
+    ));
+
+    // Register list of media for sno gallery
+    register_rest_route('centraltimes/v1', '/sno-gallery/(?P<ids>(\d+,*)+)', array(
+        'methods' => 'GET',
+        'callback' => function ($data) {
+            $images = array();
+            // ids are in format id,id,id,
+            $ids = preg_split("/,/", $data["ids"]);
+
+            foreach ($ids as $id) {
+                if (is_numeric($id))
+                    $images[] = get_post($id, ARRAY_A, "display");
+            }
+
+            return $images;
         },
     ));
 
