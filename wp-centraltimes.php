@@ -3,7 +3,7 @@
  * Plugin Name: Central Times
  * Plugin URI: https://github.com/CentralTimes/wp_centraltimes
  * Description: A WordPress plugin designed to modify the REST API to include data present in the Central Times SNO FLEX installation. Used by Central Times for its mobile app.
- * Version: 0.7.0
+ * Version: 0.7.1
  * Author: Central Times App Development Team
  * Author URI: https://github.com/CentralTimes
  * License: MIT
@@ -31,7 +31,8 @@ add_action('rest_api_init', function () {
                 array("name" => "Features", "id" => 9),
                 array("name" => "Entertainment", "id" => 14),
                 array("name" => "Sports", "id" => 11),
-                array("name" => "Opinions", "id" => 15)
+                array("name" => "Opinions", "id" => 15),
+                array("name" => "Editorials", "id" => 12)
             );
         },
     ));
