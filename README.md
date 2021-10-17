@@ -15,6 +15,9 @@ This plugin currently performs the following changes to the REST API:
 
 # Changelog
 
+## v0.7.1
+- Fixed bug that left out the Editorials tab category.
+
 ## v0.7.0
 - Project has been renamed from `wp_ct_rest_api` to `wp_centraltimes`
 - Registered a new endpoint `/centraltimes/v1/sno-gallery/(?P<ids>(\d+,*)+)`, to return SNO gallery image data
