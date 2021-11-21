@@ -6,7 +6,8 @@ This plugin currently performs the following changes to the REST API:
 - Registers a new endpoint `/centraltimes/v1/shortcodes`, which returns an array of shortcode names.
 - Registers a new endpoint `/wp/v2/staff_profile` for the SNO `staff_profile` custom post type.
 - Registers a new endpoint `/centraltimes/v1/ngg-gallery/(?P<id>\d+)`, to return NextGEN gallery image data.
-- Registers a new endpoint `/centraltimes/v1/sno-gallery/(?P<ids>(\d+,*)+)`, to return SNO gallery image data
+- Registers a new endpoint `/centraltimes/v1/sno-gallery/(?P<ids>(\d+,*)+)`, to return SNO gallery image data.
+- Registers a new endpoint `/centraltimes/v1/rules` endpoint to blacklist COVID-19 content due to app store restrictions.
 - Registers metas of `post` (endpoint `posts` in namespace `wp/v2`): `writer`, `sno_deck`, `jobtitle`, `video`,
   & `videographer` to REST fields `ct_writer`, `ct_subtitle`, `ct_jobtitle`, `ct_video`, & `ct_videographer`,
   respectively.
@@ -14,6 +15,9 @@ This plugin currently performs the following changes to the REST API:
   and `staff_name` respectively.
 
 # Changelog
+
+## v0.8.0
+- Added hardcoded `/centraltimes/v1/rules` endpoint to blacklist COVID-19 content due to app store restrictions.
 
 ## v0.7.1
 - Fixed bug that left out the Editorials tab category.

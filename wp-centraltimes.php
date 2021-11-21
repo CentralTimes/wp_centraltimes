@@ -3,7 +3,7 @@
  * Plugin Name: Central Times
  * Plugin URI: https://github.com/CentralTimes/wp_centraltimes
  * Description: A WordPress plugin designed to modify the REST API to include data present in the Central Times SNO FLEX installation. Used by Central Times for its mobile app.
- * Version: 0.7.1
+ * Version: 0.8.0
  * Author: Central Times App Development Team
  * Author URI: https://github.com/CentralTimes
  * License: MIT
@@ -33,6 +33,43 @@ add_action('rest_api_init', function () {
                 array("name" => "Sports", "id" => 11),
                 array("name" => "Opinions", "id" => 15),
                 array("name" => "Editorials", "id" => 12)
+            );
+        },
+    ));
+
+    // Hardcoded rule to blacklist COVID-19 tag on iOS
+    register_rest_route('centraltimes/v1', '/rules', array(
+        'methods' => 'GET',
+        'callback' => function () {
+            return array(
+                "blacklist" => array(
+                    array(
+                        "type" => "all",
+                        "mode" => "select",
+                        "comment" => "Blacklists all COVID-19 tagged articles on iOS",
+                        "args" => array(
+                            "rules" => array(
+                                array(
+                                    "type" => "field",
+                                    "mode" => "select",
+                                    "args" => array(
+                                        "match" => array(
+                                            "tags" => "^794$"
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "type" => "platform",
+                                    "mode" => "unselect",
+                                    "comment" => "If the platform is not Android, it's an Apple device. (Fix for issue on iPadOS)",
+                                    "args" => array(
+                                        "platform" => "Android"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
             );
         },
     ));
